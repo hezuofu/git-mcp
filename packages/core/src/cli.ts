@@ -62,22 +62,26 @@ export async function main() {
 }
 
 async function loadAdapters(registry: PlatformRegistry): Promise<void> {
-  const adapters: Array<{ name: string; exportName: string }> = [
-    { name: "@git-mcp/adapter-github", exportName: "GitHubPlatform" },
-    { name: "@git-mcp/adapter-gitlab", exportName: "GitLabPlatform" },
-    { name: "@git-mcp/adapter-gitee", exportName: "GiteePlatform" },
-    { name: "@git-mcp/adapter-gitcode", exportName: "GitCodePlatform" },
+  const adapters: Array<{ name: string; devPath: string; exportName: string }> = [
+    { name: "@git-mcp/adapter-github", devPath: "../../adapter-github/build/index.js", exportName: "GitHubPlatform" },
+    { name: "@git-mcp/adapter-gitlab", devPath: "../../adapter-gitlab/build/index.js", exportName: "GitLabPlatform" },
+    { name: "@git-mcp/adapter-gitee", devPath: "../../adapter-gitee/build/index.js", exportName: "GiteePlatform" },
+    { name: "@git-mcp/adapter-gitcode", devPath: "../../adapter-gitcode/build/index.js", exportName: "GitCodePlatform" },
   ];
 
-  for (const { name, exportName } of adapters) {
+  for (const { name, devPath, exportName } of adapters) {
     try {
-      const mod = await import(name);
+      // Try npm package name first (production), fall back to workspace path (dev)
+      let mod: any;
+      try { mod = await import(name); }
+      catch { mod = await import(devPath); }
+
       const PlatformClass = mod[exportName];
       if (PlatformClass && typeof PlatformClass === "function") {
         registry.register(new PlatformClass());
         console.error(`Loaded adapter: ${name}`);
       }
-    } catch (e) {
+    } catch {
       // Adapter not installed — skip
     }
   }

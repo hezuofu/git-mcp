@@ -21,15 +21,18 @@ export async function createMcpServer(
     capabilities: { tools: {} },
   });
 
-  const tools = toolRegistry.toMCPToolList();
-  for (const tool of tools) {
+  toolRegistry.forEachTool((name, descriptor) => {
+    // MCP SDK expects a Zod raw shape (plain object), not a ZodType instance
+    const schema = descriptor.inputSchema as any;
+    const rawShape = schema._def?.shape?.() ?? {};
+
     server.tool(
-      tool.name,
-      tool.description,
-      tool.inputSchema as Record<string, unknown>,
+      name,
+      descriptor.description,
+      rawShape,
       async (args: unknown) => {
-        const result = await toolRegistry.execute(tool.name, args, {
-          platform: { id: tool.name.split("_")[0] },
+        const result = await toolRegistry.execute(name, args, {
+          platform: { id: name.split("_")[0] },
           session: {},
         });
         return {
@@ -37,7 +40,7 @@ export async function createMcpServer(
         };
       },
     );
-  }
+  });
 
   const transport = new StdioServerTransport();
   await server.connect(transport);

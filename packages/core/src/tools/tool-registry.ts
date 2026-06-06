@@ -56,4 +56,11 @@ export class ToolRegistry {
   listToolNames(): string[] {
     return [...this.tools.keys()];
   }
+
+  /** Iterate all registered tools with their original Zod schemas. */
+  forEachTool(fn: (name: string, descriptor: ToolDescriptor) => void): void {
+    for (const [name, descriptor] of this.tools) {
+      fn(name, descriptor);
+    }
+  }
 }
