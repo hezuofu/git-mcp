@@ -5,14 +5,71 @@ import type { GitHubHttpClient } from "./github-http-client.js";
 function makeList<T>(items: T[]): PaginatedList<T> { return { items, totalCount: items.length, pageInfo: { currentPage: 1, perPage: 100 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return items[Symbol.iterator]() as any; } } as any; }
 function mapUser(u: any): User { return { id: String(u.id), username: u.login, name: u.login, email: null, avatarUrl: u.avatar_url, platform: "github" }; }
 
-// ── Issue Links (GitHub uses issue linking via GraphQL or body references; simplified via related issues) ──
+// ── Issue Links (GitHub: cross-references via timeline API) ──
 export class GitHubIssueLinkCollection implements IIssueLinkCollection {
   constructor(private readonly http: GitHubHttpClient) {}
-  private noop() { throw new Error("GitHub REST API does not support issue links. Use cross-references in issue bodies instead."); }
-  async list(): Promise<PaginatedList<IssueLink>> { return makeList([]); }
-  async get(): Promise<IssueLink> { this.noop(); return {} as any; }
-  async create(): Promise<IssueLink> { this.noop(); return {} as any; }
-  async delete(): Promise<void> { this.noop(); }
+
+  async list(repo: string, issueIid: number): Promise<PaginatedList<IssueLink>> {
+    // Use the timeline API to find cross-referenced events
+    const events = await this.http.request<any[]>("GET", `/repos/${repo}/issues/${issueIid}/timeline?per_page=100`);
+    const links: IssueLink[] = [];
+    for (const e of (events ?? [])) {
+      if (e.event === "cross-referenced" && e.source?.issue) {
+        const src = e.source.issue;
+        links.push({
+          id: `ref-${src.number}`, sourceIssueIid: issueIid,
+          targetIssueIid: src.number, targetProjectId: src.repository?.full_name ?? "",
+          linkType: "cross-reference",
+          targetIssue: { iid: src.number, title: src.title ?? "", webUrl: src.html_url ?? "", state: src.state ?? "" },
+        });
+      }
+      // Also check connected PRs
+      if (e.event === "connected" || e.event === "disconnected") {
+        const src = e.source?.issue;
+        if (src) {
+          links.push({
+            id: `conn-${src.number}`, sourceIssueIid: issueIid,
+            targetIssueIid: src.number, targetProjectId: src.repository?.full_name ?? "",
+            linkType: e.event,
+            targetIssue: { iid: src.number, title: src.title ?? "", webUrl: src.html_url ?? "", state: src.state ?? "" },
+          });
+        }
+      }
+    }
+    return makeList(links);
+  }
+
+  async get(repo: string, issueIid: number, linkId: string): Promise<IssueLink> {
+    const all = await this.list(repo, issueIid);
+    const found = all.items.find(l => l.id === linkId);
+    if (!found) throw new Error(`Issue link ${linkId} not found`);
+    return found;
+  }
+
+  async create(repo: string, issueIid: number, params: { targetProjectId: string; targetIssueIid: number; linkType?: string }): Promise<IssueLink> {
+    // GitHub doesn't have explicit issue links; add a comment referencing the target issue
+    const ref = params.targetProjectId === repo
+      ? `#${params.targetIssueIid}`
+      : `${params.targetProjectId}#${params.targetIssueIid}`;
+    const verb = params.linkType === "blocks" ? "Blocks" : "Related to";
+    await this.http.request("POST", `/repos/${repo}/issues/${issueIid}/comments`, {
+      body: JSON.stringify({ body: `${verb} ${ref}` }),
+    });
+    return {
+      id: `ref-${params.targetIssueIid}`, sourceIssueIid: issueIid,
+      targetIssueIid: params.targetIssueIid, targetProjectId: params.targetProjectId,
+      linkType: params.linkType ?? "relates_to",
+      targetIssue: { iid: params.targetIssueIid, title: "", webUrl: `https://github.com/${params.targetProjectId}/issues/${params.targetIssueIid}`, state: "" },
+    };
+  }
+
+  async delete(repo: string, issueIid: number, _linkId: string): Promise<void> {
+    // GitHub cross-references can't be deleted via REST API (they auto-resolve)
+    // Just add a comment noting the removal
+    await this.http.request("POST", `/repos/${repo}/issues/${issueIid}/comments`, {
+      body: JSON.stringify({ body: "Removed issue link reference." }),
+    });
+  }
 }
 
 // ── Todos ──

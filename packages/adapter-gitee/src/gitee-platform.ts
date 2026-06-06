@@ -18,7 +18,8 @@ import { GiteeRepository, GiteeBranch } from "./models/gitee-repository.js";
 import { GiteePullRequest } from "./models/gitee-pull-request.js";
 import { GiteeIssue } from "./models/gitee-issue.js";
 import { GiteeLabelCollection, GiteeLabelProvider } from "./gitee-labels.js";
-import { GiteeTagCollection, GiteeTagProvider, GiteeReleaseCollection, GiteeReleaseProvider, GiteeCommitCollection, GiteeCommitProvider, GiteeSearchCollection, GiteeSearchProvider, GiteePipelineCollection } from "./gitee-extra.js";
+import { GiteeTagCollection, GiteeTagProvider, GiteeReleaseCollection, GiteeReleaseProvider, GiteeCommitCollection, GiteeCommitProvider, GiteeSearchCollection, GiteeSearchProvider } from "./gitee-extra.js";
+import { GiteeIssueLinkCollection, GiteeTodoCollection, GiteeDraftNoteCollection, GiteeReactionCollection, GiteeMrVersionCollection, GiteePipelineCollection } from "./gitee-stubs.js";
 
 export class GiteePlatform extends GitPlatform {
   readonly id: PlatformId = "gitee";
@@ -82,11 +83,11 @@ export class GiteePlatform extends GitPlatform {
   get commits(): ICommitCollection { return new GiteeCommitCollection(this.httpClient); }
   get search(): ISearchCollection { return new GiteeSearchCollection(this.httpClient); }
   get pipelines(): IPipelineCollection { return new GiteePipelineCollection(); }
-  get issueLinks(): any { return { list: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), get: async () => ({}), create: async () => ({}), delete: async () => {} }; }
-  get todos(): any { return { list: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), markDone: async () => {}, markAllDone: async () => {} }; }
-  get draftNotes(): any { return { list: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), get: async () => ({}), create: async () => ({}), update: async () => ({}), delete: async () => {}, publish: async () => {}, publishAll: async () => {} }; }
-  get reactions(): any { return { listMrReactions: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), createMrReaction: async () => ({}), deleteMrReaction: async () => {}, listMrNoteReactions: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), createMrNoteReaction: async () => ({}), deleteMrNoteReaction: async () => {}, listIssueReactions: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), createIssueReaction: async () => ({}), deleteIssueReaction: async () => {}, listIssueNoteReactions: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), createIssueNoteReaction: async () => ({}), deleteIssueNoteReaction: async () => {} }; }
-  get mrVersions(): any { return { list: async () => ({ items: [], totalCount: 0, pageInfo: { currentPage: 1, perPage: 20 }, nextPage: async () => null, hasMore: () => false, [Symbol.asyncIterator]() { return [][Symbol.iterator](); } }), get: async () => ({}) }; }
+  get issueLinks(): any { return new GiteeIssueLinkCollection(); }
+  get todos(): any { return new GiteeTodoCollection(); }
+  get draftNotes(): any { return new GiteeDraftNoteCollection(); }
+  get reactions(): any { return new GiteeReactionCollection(); }
+  get mrVersions(): any { return new GiteeMrVersionCollection(); }
 }
 
 function makeList<T>(items: T[]): PaginatedList<T> {

@@ -1,4 +1,4 @@
-import type { ITagCollection, IReleaseCollection, ICommitCollection, ISearchCollection, IPipelineCollection, ToolProvider, ToolDescriptor, PaginatedList, TagInfo, ReleaseInfo, CommitInfo, CodeSearchResult, User } from "@git-mcp/core";
+import type { ITagCollection, IReleaseCollection, ICommitCollection, ISearchCollection, ToolProvider, ToolDescriptor, PaginatedList, TagInfo, ReleaseInfo, CommitInfo, CodeSearchResult, User } from "@git-mcp/core";
 import { z } from "zod";
 import type { GiteeHttpClient } from "./gitee-http-client.js";
 
@@ -92,21 +92,4 @@ export class GiteeSearchProvider implements ToolProvider {
   getTools(): ToolDescriptor[] { return [
     { action: "search_code", description: "Search code", inputSchema: z.object({ search: z.string(), repository: z.string().optional(), page: z.number().optional(), perPage: z.number().optional() }), execute: async (i) => JSON.stringify(await this.c.searchCode(i as any)) },
   ]; }
-}
-
-// ── Pipeline (stub) ──
-export class GiteePipelineCollection implements IPipelineCollection {
-  private e() { throw new Error("Gitee does not support pipelines via REST API."); }
-  async list(): Promise<any> { this.e(); return [] as any; }
-  async get(): Promise<any> { this.e(); }
-  async getJobs(): Promise<any[]> { this.e(); return []; }
-  async getJobOutput(): Promise<string> { this.e(); return ""; }
-  async create(): Promise<any> { this.e(); }
-  async retry(): Promise<any> { this.e(); }
-  async cancel(): Promise<any> { this.e(); }
-  async playJob(): Promise<any> { this.e(); }
-  async retryJob(): Promise<any> { this.e(); }
-  async cancelJob(): Promise<any> { this.e(); }
-  async listJobArtifacts(): Promise<any[]> { this.e(); return []; }
-  async listMrPipelines(): Promise<any[]> { this.e(); return []; }
 }

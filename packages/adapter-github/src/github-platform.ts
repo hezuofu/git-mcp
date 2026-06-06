@@ -24,7 +24,7 @@ import { GitHubIssue } from "./models/github-issue.js";
 import { GitHubLabelCollection, GitHubLabelProvider } from "./github-labels.js";
 import { GitHubTagCollection, GitHubTagProvider } from "./github-tags.js";
 import { GitHubReleaseCollection, GitHubReleaseProvider, GitHubCommitCollection, GitHubCommitProvider, GitHubSearchCollection, GitHubSearchProvider } from "./github-extra.js";
-import { GitHubPipelineCollection } from "./github-pipeline.js";
+import { GitHubPipelineCollection, GitHubPipelineProvider } from "./github-pipeline.js";
 import { GitHubIssueLinkCollection, GitHubTodoCollection, GitHubTodoProvider, GitHubReactionCollection, GitHubReactionProvider, GitHubDraftNoteCollection, GitHubDraftNoteProvider, GitHubMrVersionCollection, GitHubMrVersionProvider } from "./github-issues-complete.js";
 
 export class GitHubPlatform extends GitPlatform {
@@ -87,6 +87,7 @@ export class GitHubPlatform extends GitPlatform {
       new GitHubReactionProvider(new GitHubReactionCollection(this.httpClient)),
       new GitHubDraftNoteProvider(new GitHubDraftNoteCollection(this.httpClient)),
       new GitHubMrVersionProvider(new GitHubMrVersionCollection(this.httpClient)),
+      new GitHubPipelineProvider(new GitHubPipelineCollection(this.httpClient)),
     ];
   }
 
@@ -100,7 +101,7 @@ export class GitHubPlatform extends GitPlatform {
   get releases(): IReleaseCollection { return new GitHubReleaseCollection(this.httpClient); }
   get commits(): ICommitCollection { return new GitHubCommitCollection(this.httpClient); }
   get search(): ISearchCollection { return new GitHubSearchCollection(this.httpClient); }
-  get pipelines(): IPipelineCollection { return new GitHubPipelineCollection(); }
+  get pipelines(): IPipelineCollection { return new GitHubPipelineCollection(this.httpClient); }
   get issueLinks(): IIssueLinkCollection { return new GitHubIssueLinkCollection(this.httpClient); }
   get todos(): ITodoCollection { return new GitHubTodoCollection(this.httpClient); }
   get draftNotes(): IDraftNoteCollection { return new GitHubDraftNoteCollection(this.httpClient); }
