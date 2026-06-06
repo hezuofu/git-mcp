@@ -1,0 +1,39 @@
+{
+  "name": "@git-mcp/core",
+  "version": "0.1.0",
+  "description": "Multi-platform Git MCP server — core framework",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": "./build/index.js",
+    "./types": "./build/types/index.js",
+    "./errors": "./build/errors/index.js",
+    "./domain": "./build/domain/index.js",
+    "./tools": "./build/tools/index.js",
+    "./auth": "./build/auth/index.js",
+    "./http": "./build/http/index.js",
+    "./pool": "./build/pool/index.js"
+  },
+  "files": ["build"],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "node --import tsx/esm --test test/**/*.test.ts",
+    "lint": "echo 'lint: ok'"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.24.2",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.24.2",
+    "zod-to-json-schema": "^3.24.5",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6",
+    "socks-proxy-agent": "^8.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.8.2",
+    "tsx": "^4.20.5"
+  }
+}
