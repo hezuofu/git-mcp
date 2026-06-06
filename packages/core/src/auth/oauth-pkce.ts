@@ -4,7 +4,7 @@ import type { GitPlatform } from "../domain/git-platform.js";
 import http from "node:http";
 import net from "node:net";
 import { randomBytes } from "node:crypto";
-import nodeFetch from "node-fetch";
+import got from "got";
 import open from "open";
 import pkceChallenge from "pkce-challenge";
 
@@ -58,21 +58,18 @@ export class OAuthPKCEStrategy implements AuthStrategy {
 
           try {
             const tokenUrl = `${gitlabUrl}/oauth/token`;
-            const response = await nodeFetch(tokenUrl, {
-              method: "POST",
+            const data = await got.post(tokenUrl, {
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
+              json: {
                 client_id: oauthAuth.appId,
                 code,
                 grant_type: "authorization_code",
                 redirect_uri: redirectUri,
                 code_verifier,
-              }),
-            } as any);
+              },
+            }).json<any>();
 
-            const data = await response.json() as any;
-
-            if (!response.ok) {
+            if (data.error) {
               res.writeHead(500, { "Content-Type": "text/html" });
               res.end(`<h1>Authentication failed</h1><p>${data.error_description ?? data.error ?? "Unknown error"}</p>`);
               server.close();
@@ -120,13 +117,11 @@ export class OAuthPKCEStrategy implements AuthStrategy {
     access_token: string; refresh_token?: string; expires_in?: number;
   }> {
     const gitlabUrl = platform.defaultApiUrl.replace(/\/api\/v4$/, "");
-    const response = await nodeFetch(`${gitlabUrl}/oauth/token`, {
-      method: "POST",
+    const data = await got.post(`${gitlabUrl}/oauth/token`, {
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ grant_type: "refresh_token", refresh_token: refreshToken }),
-    } as any);
-    const data = await response.json() as any;
-    if (!response.ok) throw new Error(`Token refresh failed: ${data.error}`);
+      json: { grant_type: "refresh_token", refresh_token: refreshToken },
+    }).json<any>();
+    if (data.error) throw new Error(`Token refresh failed: ${data.error}`);
     return data;
   }
 }
