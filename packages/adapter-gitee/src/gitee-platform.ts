@@ -3,6 +3,8 @@ import type {
   PlatformId, User, AuthenticatedSession,
   IRepositoryCollection, IPrMrCollection, IIssueCollection,
   IFileCollection, IBranchCollection,
+  ILabelCollection, ITagCollection, IReleaseCollection,
+  ICommitCollection, ISearchCollection, IPipelineCollection,
   PaginatedList, Repository, SearchReposParams, GetRepoParams,
   CreateRepoParams, ForkRepoParams, BranchInfo,
   PullRequest, PrFilter, GetPrParams, CreatePrParams,
@@ -15,6 +17,8 @@ import { GiteeHttpClient } from "./gitee-http-client.js";
 import { GiteeRepository, GiteeBranch } from "./models/gitee-repository.js";
 import { GiteePullRequest } from "./models/gitee-pull-request.js";
 import { GiteeIssue } from "./models/gitee-issue.js";
+import { GiteeLabelCollection, GiteeLabelProvider } from "./gitee-labels.js";
+import { GiteeTagCollection, GiteeTagProvider, GiteeReleaseCollection, GiteeReleaseProvider, GiteeCommitCollection, GiteeCommitProvider, GiteeSearchCollection, GiteeSearchProvider, GiteePipelineCollection } from "./gitee-extra.js";
 
 export class GiteePlatform extends GitPlatform {
   readonly id: PlatformId = "gitee";
@@ -59,6 +63,11 @@ export class GiteePlatform extends GitPlatform {
       new GiteeRepoProvider(this), new GiteePrProvider(this),
       new GiteeIssueProvider(this), new GiteeFileProvider(this),
       new GiteeBranchProvider(this),
+      new GiteeLabelProvider(new GiteeLabelCollection(this.httpClient)),
+      new GiteeTagProvider(new GiteeTagCollection(this.httpClient)),
+      new GiteeReleaseProvider(new GiteeReleaseCollection(this.httpClient)),
+      new GiteeCommitProvider(new GiteeCommitCollection(this.httpClient)),
+      new GiteeSearchProvider(new GiteeSearchCollection(this.httpClient)),
     ];
   }
 
@@ -67,6 +76,12 @@ export class GiteePlatform extends GitPlatform {
   get issues(): IIssueCollection { return new GiteeIssueCollection(this); }
   get files(): IFileCollection { return new GiteeFileCollection(this); }
   get branches(): IBranchCollection { return new GiteeBranchCollection(this); }
+  get labels(): ILabelCollection { return new GiteeLabelCollection(this.httpClient); }
+  get tags(): ITagCollection { return new GiteeTagCollection(this.httpClient); }
+  get releases(): IReleaseCollection { return new GiteeReleaseCollection(this.httpClient); }
+  get commits(): ICommitCollection { return new GiteeCommitCollection(this.httpClient); }
+  get search(): ISearchCollection { return new GiteeSearchCollection(this.httpClient); }
+  get pipelines(): IPipelineCollection { return new GiteePipelineCollection(); }
 }
 
 function makeList<T>(items: T[]): PaginatedList<T> {

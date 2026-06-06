@@ -5,6 +5,12 @@ import type { IPrMrCollection } from "./pull-request.js";
 import type { IIssueCollection } from "./issue.js";
 import type { IFileCollection } from "./file.js";
 import type { IBranchCollection } from "./branch.js";
+import type { ILabelCollection } from "./label.js";
+import type { ITagCollection } from "./tag.js";
+import type { IReleaseCollection } from "./release.js";
+import type { ICommitCollection } from "./commit.js";
+import type { ISearchCollection } from "./search.js";
+import type { IPipelineCollection } from "./pipeline.js";
 import type { ConnectionPool } from "../pool/connection-pool.js";
 
 export abstract class GitPlatform {
@@ -17,6 +23,12 @@ export abstract class GitPlatform {
   abstract get issues(): IIssueCollection;
   abstract get files(): IFileCollection;
   abstract get branches(): IBranchCollection;
+  abstract get labels(): ILabelCollection;
+  abstract get tags(): ITagCollection;
+  abstract get releases(): IReleaseCollection;
+  abstract get commits(): ICommitCollection;
+  abstract get search(): ISearchCollection;
+  abstract get pipelines(): IPipelineCollection;
 
   abstract get terminology(): { pr: string };
 

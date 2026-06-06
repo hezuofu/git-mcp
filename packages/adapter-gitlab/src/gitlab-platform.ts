@@ -3,6 +3,8 @@ import type {
   PlatformId, User, AuthenticatedSession,
   IRepositoryCollection, IPrMrCollection, IIssueCollection,
   IFileCollection, IBranchCollection,
+  ILabelCollection, ITagCollection, IReleaseCollection,
+  ICommitCollection, ISearchCollection, IPipelineCollection,
   PaginatedList, Repository, SearchReposParams, GetRepoParams,
   CreateRepoParams, ForkRepoParams, BranchInfo,
   PullRequest, PrFilter, GetPrParams, CreatePrParams,
@@ -15,6 +17,10 @@ import { GitLabHttpClient } from "./gitlab-http-client.js";
 import { GitLabRepository, GitLabBranch } from "./models/gitlab-repository.js";
 import { GitLabMergeRequest } from "./models/gitlab-merge-request.js";
 import { GitLabIssue } from "./models/gitlab-issue.js";
+import { GitLabLabelCollection, GitLabLabelProvider } from "./gitlab-labels.js";
+import { GitLabTagCollection, GitLabTagProvider } from "./gitlab-tags.js";
+import { GitLabReleaseCollection, GitLabReleaseProvider, GitLabCommitCollection, GitLabCommitProvider, GitLabSearchCollection, GitLabSearchProvider } from "./gitlab-extra.js";
+import { GitLabPipelineCollection, GitLabPipelineProvider } from "./gitlab-pipeline.js";
 
 export class GitLabPlatform extends GitPlatform {
   readonly id: PlatformId = "gitlab";
@@ -62,6 +68,12 @@ export class GitLabPlatform extends GitPlatform {
       new GitLabRepoProvider(this), new GitLabPrProvider(this),
       new GitLabIssueProvider(this), new GitLabFileProvider(this),
       new GitLabBranchProvider(this),
+      new GitLabLabelProvider(new GitLabLabelCollection(this.httpClient)),
+      new GitLabTagProvider(new GitLabTagCollection(this.httpClient)),
+      new GitLabReleaseProvider(new GitLabReleaseCollection(this.httpClient)),
+      new GitLabCommitProvider(new GitLabCommitCollection(this.httpClient)),
+      new GitLabSearchProvider(new GitLabSearchCollection(this.httpClient)),
+      new GitLabPipelineProvider(new GitLabPipelineCollection(this.httpClient)),
     ];
   }
 
@@ -70,6 +82,12 @@ export class GitLabPlatform extends GitPlatform {
   get issues(): IIssueCollection { return new GitLabIssueCollection(this); }
   get files(): IFileCollection { return new GitLabFileCollection(this); }
   get branches(): IBranchCollection { return new GitLabBranchCollection(this); }
+  get labels(): ILabelCollection { return new GitLabLabelCollection(this.httpClient); }
+  get tags(): ITagCollection { return new GitLabTagCollection(this.httpClient); }
+  get releases(): IReleaseCollection { return new GitLabReleaseCollection(this.httpClient); }
+  get commits(): ICommitCollection { return new GitLabCommitCollection(this.httpClient); }
+  get search(): ISearchCollection { return new GitLabSearchCollection(this.httpClient); }
+  get pipelines(): IPipelineCollection { return new GitLabPipelineCollection(this.httpClient); }
 }
 
 function makeList<T>(items: T[], total: number | null, page: number, perPage: number): PaginatedList<T> {

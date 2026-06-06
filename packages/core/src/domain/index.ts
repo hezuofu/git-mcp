@@ -7,7 +7,7 @@ export type { CreatePrParams, CreateIssueParams } from "./builders.js";
 export { PullRequest, ApprovalState } from "./pull-request.js";
 export { Issue } from "./issue.js";
 
-// Types and interfaces
+// Types and interfaces — PR/MR, Issue
 export type {
   MergeOptions, MergeResult, PrUpdates, PrFilter,
   GetPrParams, PrNote, PrDiff, DiffSet, IPrMrCollection,
@@ -24,3 +24,26 @@ export type {
   FileOperation, CommitResult, IFileCollection,
 } from "./file.js";
 export type { CreateBranchParams, DeleteBranchParams, IBranchCollection } from "./branch.js";
+
+// Labels
+export type { ILabelCollection } from "./label.js";
+
+// Tags
+export type { TagInfo, CreateTagParams, ITagCollection } from "./tag.js";
+
+// Releases
+export type { ReleaseInfo, ReleaseAsset, CreateReleaseParams, IReleaseCollection } from "./release.js";
+
+// Commits
+export type {
+  CommitInfo, CommitDiff, CommitStatus, ListCommitsParams,
+  CreateCommitStatusParams, ICommitCollection, BlameEntry,
+} from "./commit.js";
+
+// Search
+export type { CodeSearchResult, SearchCodeParams, ISearchCollection } from "./search.js";
+
+// Pipelines
+export type {
+  PipelineInfo, PipelineJob, JobArtifact, IPipelineCollection,
+} from "./pipeline.js";
