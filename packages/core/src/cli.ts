@@ -66,6 +66,7 @@ async function loadAdapters(registry: PlatformRegistry): Promise<void> {
     { name: "@git-mcp/adapter-github", exportName: "GitHubPlatform" },
     { name: "@git-mcp/adapter-gitlab", exportName: "GitLabPlatform" },
     { name: "@git-mcp/adapter-gitee", exportName: "GiteePlatform" },
+    { name: "@git-mcp/adapter-gitcode", exportName: "GitCodePlatform" },
   ];
 
   for (const { name, exportName } of adapters) {

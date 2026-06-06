@@ -8,6 +8,28 @@ importers:
 
   .: {}
 
+  packages/adapter-gitcode:
+    dependencies:
+      '@git-mcp/core':
+        specifier: workspace:*
+        version: link:../core
+      node-fetch:
+        specifier: ^3.3.2
+        version: 3.3.2
+      zod:
+        specifier: ^3.24.2
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.19.20
+      tsx:
+        specifier: ^4.20.5
+        version: 4.22.4
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
   packages/adapter-gitee:
     dependencies:
       '@git-mcp/core':
