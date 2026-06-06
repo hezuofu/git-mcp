@@ -74,7 +74,7 @@ async function loadAdapters(registry: PlatformRegistry): Promise<void> {
       // Try npm package name first (production), fall back to workspace path (dev)
       let mod: any;
       try { mod = await import(name); }
-      catch { mod = await import(devPath); }
+      catch { try { mod = await import(devPath); } catch { continue; } }
 
       const PlatformClass = mod[exportName];
       if (PlatformClass && typeof PlatformClass === "function") {
@@ -87,7 +87,11 @@ async function loadAdapters(registry: PlatformRegistry): Promise<void> {
   }
 }
 
-main().catch(err => {
-  console.error("Fatal:", err);
-  process.exit(1);
-});
+// Only auto-execute when run directly (node cli.js), not when imported as module
+const runningDirectly = process.argv[1]?.includes("cli.js");
+if (runningDirectly) {
+  main().catch(err => {
+    console.error("Fatal:", err);
+    process.exit(1);
+  });
+}

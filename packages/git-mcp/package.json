@@ -1,0 +1,36 @@
+{
+  "name": "@git-mcp/git-mcp",
+  "version": "0.1.0",
+  "description": "Multi-platform Git MCP server — supports GitHub, GitLab, Gitee, GitCode",
+  "type": "module",
+  "bin": {
+    "git-mcp": "./bin/git-mcp.mjs"
+  },
+  "files": [
+    "bin/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "echo 'no build needed'"
+  },
+  "dependencies": {
+    "@git-mcp/core": "workspace:*",
+    "@git-mcp/adapter-github": "workspace:*",
+    "@git-mcp/adapter-gitlab": "workspace:*",
+    "@git-mcp/adapter-gitee": "workspace:*",
+    "@git-mcp/adapter-gitcode": "workspace:*"
+  },
+  "keywords": [
+    "git", "mcp", "mcp-server", "model-context-protocol",
+    "github", "gitlab", "gitee", "gitcode",
+    "claude", "cursor", "codex", "copilot", "ai-agent"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hezuofu/git-mcp.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

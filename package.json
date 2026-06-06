@@ -1,16 +1,28 @@
 {
   "name": "git-mcp-monorepo",
   "private": true,
+  "version": "0.1.0",
+  "description": "Multi-platform Git MCP server — supports GitHub, GitLab, Gitee, GitCode",
   "type": "module",
-  "bin": {
-    "git-mcp": "./packages/core/build/cli.js"
-  },
   "scripts": {
     "build": "pnpm -r build",
     "build:core": "pnpm --filter @git-mcp/core build",
     "test": "pnpm -r test",
-    "dev": "pnpm build && cross-env GIT_MCP_CONFIG='{\"platforms\":[]}' node packages/core/build/cli.js"
+    "dev": "pnpm build && GIT_MCP_CONFIG='{\"platforms\":[]}' node packages/core/build/cli.js",
+    "publish:core": "pnpm --filter @git-mcp/core publish --access public",
+    "publish:github": "pnpm --filter @git-mcp/adapter-github publish --access public",
+    "publish:gitlab": "pnpm --filter @git-mcp/adapter-gitlab publish --access public",
+    "publish:gitee": "pnpm --filter @git-mcp/adapter-gitee publish --access public",
+    "publish:gitcode": "pnpm --filter @git-mcp/adapter-gitcode publish --access public",
+    "publish:bundled": "pnpm --filter @git-mcp/git-mcp publish --access public",
+    "publish:all": "pnpm publish:core && pnpm publish:github && pnpm publish:gitlab && pnpm publish:gitee && pnpm publish:gitcode && pnpm publish:bundled"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hezuofu/git-mcp.git"
+  },
+  "keywords": ["git", "mcp", "mcp-server", "github", "gitlab", "gitee", "gitcode", "claude", "cursor", "codex", "copilot"],
+  "license": "MIT",
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
