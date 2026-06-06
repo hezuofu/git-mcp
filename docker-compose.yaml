@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  # ── stdio mode (default) ──
+  # Used with: docker compose run --rm git-mcp
+  git-mcp:
+    build: .
+    image: git-mcp:latest
+    environment:
+      - GIT_MCP_CONFIG=${GIT_MCP_CONFIG}
+      - GIT_MCP_TRANSPORT=stdio
+    stdin_open: true
+    profiles: ["stdio"]
+
+  # ── HTTP mode (for remote/network access) ──
+  git-mcp-http:
+    build: .
+    image: git-mcp:latest
+    ports:
+      - "${GIT_MCP_PORT:-3002}:3002"
+    environment:
+      - GIT_MCP_CONFIG=${GIT_MCP_CONFIG}
+      - GIT_MCP_TRANSPORT=streamable-http
+      - GIT_MCP_HOST=0.0.0.0
+      - GIT_MCP_PORT=3002
+      # Optional: proxy settings
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      - NO_PROXY=${NO_PROXY:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3002/mcp').then(r => r.ok)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    profiles: ["http"]

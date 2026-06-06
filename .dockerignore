@@ -1,0 +1,12 @@
+node_modules/
+build/
+.git/
+.gitignore
+*.md
+docs/
+skills/
+test/
+.idea/
+.npmrc
+.nvmrc
+.env
