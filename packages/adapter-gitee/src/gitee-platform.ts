@@ -20,6 +20,13 @@ import { GiteeIssue } from "./models/gitee-issue.js";
 import { GiteeLabelCollection, GiteeLabelProvider } from "./gitee-labels.js";
 import { GiteeTagCollection, GiteeTagProvider, GiteeReleaseCollection, GiteeReleaseProvider, GiteeCommitCollection, GiteeCommitProvider, GiteeSearchCollection, GiteeSearchProvider } from "./gitee-extra.js";
 import { GiteeIssueLinkCollection, GiteeTodoCollection, GiteeDraftNoteCollection, GiteeReactionCollection, GiteeMrVersionCollection, GiteePipelineCollection } from "./gitee-stubs.js";
+import { GiteeEnterpriseTools } from "./gitee-enterprise.js";
+
+// ToolProvider wrapper for enterprise tools
+class GiteeEnterpriseToolWrapper implements ToolProvider {
+  constructor(private readonly http: GiteeHttpClient) {}
+  getTools(): ToolDescriptor[] { return GiteeEnterpriseTools.getTools(this.http); }
+}
 
 export class GiteePlatform extends GitPlatform {
   readonly id: PlatformId = "gitee";
@@ -69,6 +76,8 @@ export class GiteePlatform extends GitPlatform {
       new GiteeReleaseProvider(new GiteeReleaseCollection(this.httpClient)),
       new GiteeCommitProvider(new GiteeCommitCollection(this.httpClient)),
       new GiteeSearchProvider(new GiteeSearchCollection(this.httpClient)),
+      // Enterprise tools (from mcp-gitee-ent)
+      new GiteeEnterpriseToolWrapper(this.httpClient),
     ];
   }
 
