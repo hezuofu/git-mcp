@@ -7,6 +7,8 @@ import type {
   IFileCollection, IBranchCollection,
   ILabelCollection, ITagCollection, IReleaseCollection,
   ICommitCollection, ISearchCollection, IPipelineCollection,
+  IIssueLinkCollection, ITodoCollection, IDraftNoteCollection,
+  IReactionCollection, IMrVersionCollection,
   PaginatedList, Repository, SearchReposParams, GetRepoParams,
   CreateRepoParams, ForkRepoParams, BranchInfo,
   PullRequest, PrFilter, GetPrParams, CreatePrParams,
@@ -23,6 +25,7 @@ import { GitHubLabelCollection, GitHubLabelProvider } from "./github-labels.js";
 import { GitHubTagCollection, GitHubTagProvider } from "./github-tags.js";
 import { GitHubReleaseCollection, GitHubReleaseProvider, GitHubCommitCollection, GitHubCommitProvider, GitHubSearchCollection, GitHubSearchProvider } from "./github-extra.js";
 import { GitHubPipelineCollection } from "./github-pipeline.js";
+import { GitHubIssueLinkCollection, GitHubTodoCollection, GitHubTodoProvider, GitHubReactionCollection, GitHubReactionProvider, GitHubDraftNoteCollection, GitHubDraftNoteProvider, GitHubMrVersionCollection, GitHubMrVersionProvider } from "./github-issues-complete.js";
 
 export class GitHubPlatform extends GitPlatform {
   readonly id: PlatformId = "github";
@@ -80,6 +83,10 @@ export class GitHubPlatform extends GitPlatform {
       new GitHubReleaseProvider(new GitHubReleaseCollection(this.httpClient)),
       new GitHubCommitProvider(new GitHubCommitCollection(this.httpClient)),
       new GitHubSearchProvider(new GitHubSearchCollection(this.httpClient)),
+      new GitHubTodoProvider(new GitHubTodoCollection(this.httpClient)),
+      new GitHubReactionProvider(new GitHubReactionCollection(this.httpClient)),
+      new GitHubDraftNoteProvider(new GitHubDraftNoteCollection(this.httpClient)),
+      new GitHubMrVersionProvider(new GitHubMrVersionCollection(this.httpClient)),
     ];
   }
 
@@ -94,6 +101,11 @@ export class GitHubPlatform extends GitPlatform {
   get commits(): ICommitCollection { return new GitHubCommitCollection(this.httpClient); }
   get search(): ISearchCollection { return new GitHubSearchCollection(this.httpClient); }
   get pipelines(): IPipelineCollection { return new GitHubPipelineCollection(); }
+  get issueLinks(): IIssueLinkCollection { return new GitHubIssueLinkCollection(this.httpClient); }
+  get todos(): ITodoCollection { return new GitHubTodoCollection(this.httpClient); }
+  get draftNotes(): IDraftNoteCollection { return new GitHubDraftNoteCollection(this.httpClient); }
+  get reactions(): IReactionCollection { return new GitHubReactionCollection(this.httpClient); }
+  get mrVersions(): IMrVersionCollection { return new GitHubMrVersionCollection(this.httpClient); }
 }
 
 // ── Repo ──

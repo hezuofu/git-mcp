@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { ToolRegistry } from "./tools/tool-registry.js";
 import { PlatformRegistry } from "./domain/git-platform.js";
-import { ConfigLoader } from "./auth/config-loader.js";
+import { ConfigLoader, OAuthPKCEStrategy } from "./auth/index.js";
 import { createMcpServer } from "./transport/mcp-server.js";
 import type { AuthEntry } from "./types/auth.js";
 import type { AuthStrategy, ActivePlatform } from "./auth/auth-strategy.js";
@@ -28,7 +28,7 @@ export async function main() {
     },
   };
 
-  const configLoader = new ConfigLoader([patStrategy]);
+  const configLoader = new ConfigLoader([patStrategy, new OAuthPKCEStrategy()]);
   const config = configLoader.parse(configRaw);
 
   // 2. Load platform adapters

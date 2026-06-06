@@ -11,6 +11,11 @@ import type { IReleaseCollection } from "./release.js";
 import type { ICommitCollection } from "./commit.js";
 import type { ISearchCollection } from "./search.js";
 import type { IPipelineCollection } from "./pipeline.js";
+import type { IIssueLinkCollection } from "./issue-link.js";
+import type { ITodoCollection } from "./todo.js";
+import type { IDraftNoteCollection } from "./draft-note.js";
+import type { IReactionCollection } from "./reaction.js";
+import type { IMrVersionCollection } from "./mr-version.js";
 import type { ConnectionPool } from "../pool/connection-pool.js";
 
 export abstract class GitPlatform {
@@ -29,6 +34,11 @@ export abstract class GitPlatform {
   abstract get commits(): ICommitCollection;
   abstract get search(): ISearchCollection;
   abstract get pipelines(): IPipelineCollection;
+  abstract get issueLinks(): IIssueLinkCollection;
+  abstract get todos(): ITodoCollection;
+  abstract get draftNotes(): IDraftNoteCollection;
+  abstract get reactions(): IReactionCollection;
+  abstract get mrVersions(): IMrVersionCollection;
 
   abstract get terminology(): { pr: string };
 

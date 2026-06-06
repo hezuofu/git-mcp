@@ -29,7 +29,9 @@
     "zod-to-json-schema": "^3.24.5",
     "http-proxy-agent": "^7.0.2",
     "https-proxy-agent": "^7.0.6",
-    "socks-proxy-agent": "^8.0.5"
+    "socks-proxy-agent": "^8.0.5",
+    "open": "^10.2.0",
+    "pkce-challenge": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.0",

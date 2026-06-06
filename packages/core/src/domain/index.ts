@@ -47,3 +47,18 @@ export type { CodeSearchResult, SearchCodeParams, ISearchCollection } from "./se
 export type {
   PipelineInfo, PipelineJob, JobArtifact, IPipelineCollection,
 } from "./pipeline.js";
+
+// Issue links
+export type { IssueLink, IIssueLinkCollection } from "./issue-link.js";
+
+// Todos
+export type { TodoItem, ITodoCollection } from "./todo.js";
+
+// Draft notes
+export type { DraftNote, CreateDraftNoteParams, IDraftNoteCollection } from "./draft-note.js";
+
+// Emoji reactions
+export type { EmojiReaction, IReactionCollection } from "./reaction.js";
+
+// MR versions
+export type { MrVersion, IMrVersionCollection } from "./mr-version.js";

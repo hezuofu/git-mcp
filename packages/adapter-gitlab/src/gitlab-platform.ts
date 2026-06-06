@@ -5,6 +5,8 @@ import type {
   IFileCollection, IBranchCollection,
   ILabelCollection, ITagCollection, IReleaseCollection,
   ICommitCollection, ISearchCollection, IPipelineCollection,
+  IIssueLinkCollection, ITodoCollection, IDraftNoteCollection,
+  IReactionCollection, IMrVersionCollection,
   PaginatedList, Repository, SearchReposParams, GetRepoParams,
   CreateRepoParams, ForkRepoParams, BranchInfo,
   PullRequest, PrFilter, GetPrParams, CreatePrParams,
@@ -21,6 +23,7 @@ import { GitLabLabelCollection, GitLabLabelProvider } from "./gitlab-labels.js";
 import { GitLabTagCollection, GitLabTagProvider } from "./gitlab-tags.js";
 import { GitLabReleaseCollection, GitLabReleaseProvider, GitLabCommitCollection, GitLabCommitProvider, GitLabSearchCollection, GitLabSearchProvider } from "./gitlab-extra.js";
 import { GitLabPipelineCollection, GitLabPipelineProvider } from "./gitlab-pipeline.js";
+import { GitLabIssueLinkCollection, GitLabIssueLinkProvider, GitLabTodoCollection, GitLabTodoProvider, GitLabReactionCollection, GitLabReactionProvider, GitLabDraftNoteCollection, GitLabDraftNoteProvider, GitLabMrVersionCollection, GitLabMrVersionProvider } from "./gitlab-issues-complete.js";
 
 export class GitLabPlatform extends GitPlatform {
   readonly id: PlatformId = "gitlab";
@@ -74,6 +77,11 @@ export class GitLabPlatform extends GitPlatform {
       new GitLabCommitProvider(new GitLabCommitCollection(this.httpClient)),
       new GitLabSearchProvider(new GitLabSearchCollection(this.httpClient)),
       new GitLabPipelineProvider(new GitLabPipelineCollection(this.httpClient)),
+      new GitLabIssueLinkProvider(new GitLabIssueLinkCollection(this.httpClient)),
+      new GitLabTodoProvider(new GitLabTodoCollection(this.httpClient)),
+      new GitLabReactionProvider(new GitLabReactionCollection(this.httpClient)),
+      new GitLabDraftNoteProvider(new GitLabDraftNoteCollection(this.httpClient)),
+      new GitLabMrVersionProvider(new GitLabMrVersionCollection(this.httpClient)),
     ];
   }
 
@@ -88,6 +96,11 @@ export class GitLabPlatform extends GitPlatform {
   get commits(): ICommitCollection { return new GitLabCommitCollection(this.httpClient); }
   get search(): ISearchCollection { return new GitLabSearchCollection(this.httpClient); }
   get pipelines(): IPipelineCollection { return new GitLabPipelineCollection(this.httpClient); }
+  get issueLinks(): IIssueLinkCollection { return new GitLabIssueLinkCollection(this.httpClient); }
+  get todos(): ITodoCollection { return new GitLabTodoCollection(this.httpClient); }
+  get draftNotes(): IDraftNoteCollection { return new GitLabDraftNoteCollection(this.httpClient); }
+  get reactions(): IReactionCollection { return new GitLabReactionCollection(this.httpClient); }
+  get mrVersions(): IMrVersionCollection { return new GitLabMrVersionCollection(this.httpClient); }
 }
 
 function makeList<T>(items: T[], total: number | null, page: number, perPage: number): PaginatedList<T> {
