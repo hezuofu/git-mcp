@@ -2,11 +2,14 @@
   "name": "git-mcp-monorepo",
   "private": true,
   "type": "module",
+  "bin": {
+    "git-mcp": "./packages/core/build/cli.js"
+  },
   "scripts": {
     "build": "pnpm -r build",
     "build:core": "pnpm --filter @git-mcp/core build",
     "test": "pnpm -r test",
-    "dev": "pnpm build:core && node packages/core/build/index.js"
+    "dev": "pnpm build && cross-env GIT_MCP_CONFIG='{\"platforms\":[]}' node packages/core/build/cli.js"
   },
   "engines": {
     "node": ">=18.0.0",

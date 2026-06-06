@@ -2,12 +2,18 @@ export { GitPlatform, PlatformRegistry } from "./git-platform.js";
 export { PaginatedList } from "./paginated-list.js";
 export { CreatePrBuilder, CreateIssueBuilder } from "./builders.js";
 export type { CreatePrParams, CreateIssueParams } from "./builders.js";
+
+// Abstract classes — exported as values so subclasses can extend them
+export { PullRequest, ApprovalState } from "./pull-request.js";
+export { Issue } from "./issue.js";
+
+// Types and interfaces
 export type {
-  PullRequest, MergeOptions, MergeResult, PrUpdates, PrFilter,
-  GetPrParams, PrNote, PrDiff, DiffSet, ApprovalState, IPrMrCollection,
+  MergeOptions, MergeResult, PrUpdates, PrFilter,
+  GetPrParams, PrNote, PrDiff, DiffSet, IPrMrCollection,
 } from "./pull-request.js";
 export type {
-  Issue, IssueUpdates, IssueFilter, GetIssueParams, IssueNote, IIssueCollection,
+  IssueUpdates, IssueFilter, GetIssueParams, IssueNote, IIssueCollection,
 } from "./issue.js";
 export type {
   Repository, SearchReposParams, GetRepoParams, CreateRepoParams,

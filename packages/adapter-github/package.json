@@ -1,0 +1,26 @@
+{
+  "name": "@git-mcp/adapter-github",
+  "version": "0.1.0",
+  "description": "GitHub adapter for git-mcp",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": ["build"],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --import tsx/esm --test test/**/*.test.ts"
+  },
+  "dependencies": {
+    "@git-mcp/core": "workspace:*",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.8.2",
+    "tsx": "^4.20.5"
+  },
+  "peerDependencies": {
+    "@git-mcp/core": "*"
+  }
+}
