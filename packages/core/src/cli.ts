@@ -62,36 +62,24 @@ export async function main() {
 }
 
 async function loadAdapters(registry: PlatformRegistry): Promise<void> {
-  const adapters: Array<{ name: string; devPath: string; exportName: string }> = [
-    { name: "@git-mcp/adapter-github", devPath: "../../adapter-github/build/index.js", exportName: "GitHubPlatform" },
-    { name: "@git-mcp/adapter-gitlab", devPath: "../../adapter-gitlab/build/index.js", exportName: "GitLabPlatform" },
-    { name: "@git-mcp/adapter-gitee", devPath: "../../adapter-gitee/build/index.js", exportName: "GiteePlatform" },
-    { name: "@git-mcp/adapter-gitcode", devPath: "../../adapter-gitcode/build/index.js", exportName: "GitCodePlatform" },
+  const adapters: Array<{ name: string; exportName: string }> = [
+    { name: "@git-mcp/github", exportName: "GitHubPlatform" },
+    { name: "@git-mcp/gitlab", exportName: "GitLabPlatform" },
+    { name: "@git-mcp/gitee", exportName: "GiteePlatform" },
+    { name: "@git-mcp/gitcode", exportName: "GitCodePlatform" },
   ];
 
-  for (const { name, devPath, exportName } of adapters) {
+  for (const { name, exportName } of adapters) {
     try {
-      // Try npm package name first (production), fall back to workspace path (dev)
-      let mod: any;
-      try { mod = await import(name); }
-      catch { try { mod = await import(devPath); } catch { continue; } }
-
+      const mod = await import(name);
       const PlatformClass = mod[exportName];
       if (PlatformClass && typeof PlatformClass === "function") {
         registry.register(new PlatformClass());
-        console.error(`Loaded adapter: ${name}`);
+        console.error(`Loaded: ${name}`);
       }
     } catch {
-      // Adapter not installed — skip
+      // Adapter not installed — skip silently
     }
   }
 }
 
-// Only auto-execute when run directly (node cli.js), not when imported as module
-const runningDirectly = process.argv[1]?.includes("cli.js");
-if (runningDirectly) {
-  main().catch(err => {
-    console.error("Fatal:", err);
-    process.exit(1);
-  });
-}

@@ -1,11 +1,13 @@
 {
-  "name": "@git-mcp/adapter-github",
+  "name": "@git-mcp/gitlab",
   "version": "0.1.0",
-  "description": "GitHub adapter for git-mcp",
+  "description": "GitLab adapter for git-mcp",
   "type": "module",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
-  "files": ["build"],
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "node --import tsx/esm --test test/**/*.test.ts"
@@ -18,8 +20,5 @@
     "@types/node": "^22.13.0",
     "typescript": "^5.8.2",
     "tsx": "^4.20.5"
-  },
-  "peerDependencies": {
-    "@git-mcp/core": "*"
   }
 }

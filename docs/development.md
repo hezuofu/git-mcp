@@ -41,7 +41,7 @@ pnpm build                # 编译所有包
 pnpm test                 # 运行所有测试
 pnpm dev                  # 编译并启动
 tsx --test packages/core/test/*.test.ts     # 运行核心测试
-tsx --test packages/adapter-github/test/*.test.ts  # 运行 GitHub 适配器测试
+tsx --test packages/github/test/*.test.ts  # 运行 GitHub 适配器测试
 ```
 
 ## 本地调试
@@ -59,7 +59,7 @@ pnpm build && node packages/core/build/cli.js
 ### 1. 创建适配器包
 
 ```bash
-mkdir -p packages/adapter-newplatform/src/models
+mkdir -p packages/newplatform/src/models
 ```
 
 ### 2. 实现必要接口
@@ -82,7 +82,7 @@ mkdir -p packages/adapter-newplatform/src/models
 编辑 `packages/core/src/cli.ts`，在 `loadAdapters` 中添加：
 
 ```typescript
-{ name: "@git-mcp/adapter-newplatform",
+{ name: "@git-mcp/newplatform",
   devPath: "../../adapter-newplatform/build/index.js",
   exportName: "NewPlatformPlatform" },
 ```
@@ -90,9 +90,9 @@ mkdir -p packages/adapter-newplatform/src/models
 ### 4. 添加包配置
 
 ```json
-// packages/adapter-newplatform/package.json
+// packages/newplatform/package.json
 {
-  "name": "@git-mcp/adapter-newplatform",
+  "name": "@git-mcp/newplatform",
   "dependencies": {
     "@git-mcp/core": "workspace:*",
     "node-fetch": "^3.3.2",
@@ -108,7 +108,7 @@ mkdir -p packages/adapter-newplatform/src/models
 tsx --test packages/core/test/*.test.ts
 
 # adapter-github 有完整的单元测试
-tsx --test packages/adapter-github/test/github-adapter.test.ts
+tsx --test packages/github/test/github-adapter.test.ts
 ```
 
 测试覆盖：

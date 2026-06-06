@@ -1,5 +1,5 @@
 {
-  "name": "@git-mcp/adapter-gitcode",
+  "name": "@git-mcp/gitcode",
   "version": "0.1.0",
   "description": "GitCode adapter for git-mcp",
   "type": "module",

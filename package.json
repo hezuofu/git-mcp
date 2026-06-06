@@ -10,21 +10,38 @@
     "test": "pnpm -r test",
     "dev": "pnpm build && GIT_MCP_CONFIG='{\"platforms\":[]}' node packages/core/build/cli.js",
     "publish:core": "pnpm --filter @git-mcp/core publish --access public",
-    "publish:github": "pnpm --filter @git-mcp/adapter-github publish --access public",
-    "publish:gitlab": "pnpm --filter @git-mcp/adapter-gitlab publish --access public",
-    "publish:gitee": "pnpm --filter @git-mcp/adapter-gitee publish --access public",
-    "publish:gitcode": "pnpm --filter @git-mcp/adapter-gitcode publish --access public",
-    "publish:bundled": "pnpm --filter @git-mcp/git-mcp publish --access public",
-    "publish:all": "pnpm publish:core && pnpm publish:github && pnpm publish:gitlab && pnpm publish:gitee && pnpm publish:gitcode && pnpm publish:bundled"
+    "publish:github": "pnpm --filter @git-mcp/github publish --access public",
+    "publish:gitlab": "pnpm --filter @git-mcp/gitlab publish --access public",
+    "publish:gitee": "pnpm --filter @git-mcp/gitee publish --access public",
+    "publish:gitcode": "pnpm --filter @git-mcp/gitcode publish --access public",
+    "publish:all": "pnpm publish:core && pnpm publish:github && pnpm publish:gitlab && pnpm publish:gitee && pnpm publish:gitcode"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hezuofu/git-mcp.git"
   },
-  "keywords": ["git", "mcp", "mcp-server", "github", "gitlab", "gitee", "gitcode", "claude", "cursor", "codex", "copilot"],
+  "keywords": [
+    "git",
+    "mcp",
+    "mcp-server",
+    "github",
+    "gitlab",
+    "gitee",
+    "gitcode",
+    "claude",
+    "cursor",
+    "codex",
+    "copilot"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "@git-mcp/github": "workspace:*",
+    "@git-mcp/gitlab": "workspace:*",
+    "@git-mcp/gitee": "workspace:*",
+    "@git-mcp/gitcode": "workspace:*"
   }
 }

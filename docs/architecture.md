@@ -99,16 +99,16 @@ packages/
 │   ├── http/                  HTTP 客户端 (PlatformHttpClient)
 │   └── transport/             MCP 传输 (stdio/SSE/HTTP)
 │
-├── adapter-github/            @git-mcp/adapter-github
+├── adapter-github/            @git-mcp/github
 │   ├── github-platform.ts     GitHubPlatform extends GitPlatform
 │   ├── github-session.ts      Bearer Token 签名
 │   ├── github-http-client.ts  Accept: vnd.github+json
 │   ├── github-api-error.ts    404→NotFoundError 映射
 │   └── models/                GitHubPullRequest, GitHubIssue...
 │
-├── adapter-gitlab/            @git-mcp/adapter-gitlab
-├── adapter-gitee/             @git-mcp/adapter-gitee
-├── adapter-gitcode/           @git-mcp/adapter-gitcode
+├── adapter-gitlab/            @git-mcp/gitlab
+├── adapter-gitee/             @git-mcp/gitee
+├── adapter-gitcode/           @git-mcp/gitcode
 └── git-mcp/                   @git-mcp/git-mcp (打包发布)
 ```
 

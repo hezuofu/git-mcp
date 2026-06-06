@@ -69,9 +69,9 @@ GIT_MCP_CONFIG='{"platforms":[]}' npx @git-mcp/git-mcp
 
 预期输出：
 ```
-Loaded adapter: @git-mcp/adapter-github
-Loaded adapter: @git-mcp/adapter-gitlab
-Loaded adapter: @git-mcp/adapter-gitee
-Loaded adapter: @git-mcp/adapter-gitcode
+Loaded adapter: @git-mcp/github
+Loaded adapter: @git-mcp/gitlab
+Loaded adapter: @git-mcp/gitee
+Loaded adapter: @git-mcp/gitcode
 Active platforms: (none, but adapters loaded)
 ```

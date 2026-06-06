@@ -6,83 +6,20 @@ settings:
 
 importers:
 
-  .: {}
-
-  packages/adapter-gitcode:
-    dependencies:
-      '@git-mcp/core':
-        specifier: workspace:*
-        version: link:../core
-      zod:
-        specifier: ^3.24.2
-        version: 3.25.76
+  .:
     devDependencies:
-      '@types/node':
-        specifier: ^22.13.0
-        version: 22.19.20
-      tsx:
-        specifier: ^4.20.5
-        version: 4.22.4
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
-
-  packages/adapter-gitee:
-    dependencies:
-      '@git-mcp/core':
+      '@git-mcp/gitcode':
         specifier: workspace:*
-        version: link:../core
-      zod:
-        specifier: ^3.24.2
-        version: 3.25.76
-    devDependencies:
-      '@types/node':
-        specifier: ^22.13.0
-        version: 22.19.20
-      tsx:
-        specifier: ^4.20.5
-        version: 4.22.4
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
-
-  packages/adapter-github:
-    dependencies:
-      '@git-mcp/core':
+        version: link:packages/gitcode
+      '@git-mcp/gitee':
         specifier: workspace:*
-        version: link:../core
-      zod:
-        specifier: ^3.24.2
-        version: 3.25.76
-    devDependencies:
-      '@types/node':
-        specifier: ^22.13.0
-        version: 22.19.20
-      tsx:
-        specifier: ^4.20.5
-        version: 4.22.4
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
-
-  packages/adapter-gitlab:
-    dependencies:
-      '@git-mcp/core':
+        version: link:packages/gitee
+      '@git-mcp/github':
         specifier: workspace:*
-        version: link:../core
-      zod:
-        specifier: ^3.24.2
-        version: 3.25.76
-    devDependencies:
-      '@types/node':
-        specifier: ^22.13.0
-        version: 22.19.20
-      tsx:
-        specifier: ^4.20.5
-        version: 4.22.4
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
+        version: link:packages/github
+      '@git-mcp/gitlab':
+        specifier: workspace:*
+        version: link:packages/gitlab
 
   packages/core:
     dependencies:
@@ -124,23 +61,81 @@ importers:
         specifier: ^5.8.2
         version: 5.9.3
 
-  packages/git-mcp:
+  packages/gitcode:
     dependencies:
-      '@git-mcp/adapter-gitcode':
-        specifier: workspace:*
-        version: link:../adapter-gitcode
-      '@git-mcp/adapter-gitee':
-        specifier: workspace:*
-        version: link:../adapter-gitee
-      '@git-mcp/adapter-github':
-        specifier: workspace:*
-        version: link:../adapter-github
-      '@git-mcp/adapter-gitlab':
-        specifier: workspace:*
-        version: link:../adapter-gitlab
       '@git-mcp/core':
         specifier: workspace:*
         version: link:../core
+      zod:
+        specifier: ^3.24.2
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.19.20
+      tsx:
+        specifier: ^4.20.5
+        version: 4.22.4
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
+  packages/gitee:
+    dependencies:
+      '@git-mcp/core':
+        specifier: workspace:*
+        version: link:../core
+      zod:
+        specifier: ^3.24.2
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.19.20
+      tsx:
+        specifier: ^4.20.5
+        version: 4.22.4
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
+  packages/github:
+    dependencies:
+      '@git-mcp/core':
+        specifier: workspace:*
+        version: link:../core
+      zod:
+        specifier: ^3.24.2
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.19.20
+      tsx:
+        specifier: ^4.20.5
+        version: 4.22.4
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
+  packages/gitlab:
+    dependencies:
+      '@git-mcp/core':
+        specifier: workspace:*
+        version: link:../core
+      zod:
+        specifier: ^3.24.2
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.19.20
+      tsx:
+        specifier: ^4.20.5
+        version: 4.22.4
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
 
 packages:
 

@@ -1,5 +1,5 @@
 {
-  "name": "@git-mcp/adapter-gitee",
+  "name": "@git-mcp/gitee",
   "version": "0.1.0",
   "description": "Gitee adapter for git-mcp",
   "type": "module",

@@ -19,10 +19,10 @@ pnpm publish:all
 
 ```bash
 pnpm publish:core         # @git-mcp/core
-pnpm publish:github       # @git-mcp/adapter-github
-pnpm publish:gitlab       # @git-mcp/adapter-gitlab
-pnpm publish:gitee        # @git-mcp/adapter-gitee
-pnpm publish:gitcode      # @git-mcp/adapter-gitcode
+pnpm publish:github       # @git-mcp/github
+pnpm publish:gitlab       # @git-mcp/gitlab
+pnpm publish:gitee        # @git-mcp/gitee
+pnpm publish:gitcode      # @git-mcp/gitcode
 pnpm publish:bundled      # @git-mcp/git-mcp (meta-package)
 ```
 
@@ -59,10 +59,10 @@ GIT_MCP_CONFIG='{"platforms":[]}' git-mcp
 
 ```
 @git-mcp/core                 # 核心框架
-@git-mcp/adapter-github       # GitHub 适配器
-@git-mcp/adapter-gitlab       # GitLab 适配器
-@git-mcp/adapter-gitee        # Gitee 适配器
-@git-mcp/adapter-gitcode      # GitCode 适配器
+@git-mcp/github       # GitHub 适配器
+@git-mcp/gitlab       # GitLab 适配器
+@git-mcp/gitee        # Gitee 适配器
+@git-mcp/gitcode      # GitCode 适配器
 @git-mcp/git-mcp              # 捆绑包 (含所有适配器)
 ```
 
@@ -73,5 +73,5 @@ GIT_MCP_CONFIG='{"platforms":[]}' git-mcp
 npm install -g @git-mcp/git-mcp
 
 # 或只安装需要的适配器
-npm install -g @git-mcp/core @git-mcp/adapter-github
+npm install -g @git-mcp/core @git-mcp/github
 ```

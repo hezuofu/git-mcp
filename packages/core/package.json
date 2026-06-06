@@ -1,19 +1,22 @@
 {
   "name": "@git-mcp/core",
   "version": "0.1.0",
-  "description": "Multi-platform Git MCP server — core framework",
+  "description": "Multi-platform Git MCP server — core framework + bundled CLI",
   "type": "module",
-  "main": "./build/index.js",
-  "types": "./build/index.d.ts",
+  "main": "./build/src/index.js",
+  "types": "./build/src/index.d.ts",
+  "bin": {
+    "git-mcp": "./build/bin/cli.js"
+  },
   "exports": {
-    ".": "./build/index.js",
-    "./types": "./build/types/index.js",
-    "./errors": "./build/errors/index.js",
-    "./domain": "./build/domain/index.js",
-    "./tools": "./build/tools/index.js",
-    "./auth": "./build/auth/index.js",
-    "./http": "./build/http/index.js",
-    "./pool": "./build/pool/index.js"
+    ".": "./build/src/index.js",
+    "./types": "./build/src/types/index.js",
+    "./errors": "./build/src/errors/index.js",
+    "./domain": "./build/src/domain/index.js",
+    "./tools": "./build/src/tools/index.js",
+    "./auth": "./build/src/auth/index.js",
+    "./http": "./build/src/http/index.js",
+    "./pool": "./build/src/pool/index.js"
   },
   "files": ["build"],
   "scripts": {
