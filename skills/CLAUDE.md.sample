@@ -1,0 +1,36 @@
+# CLAUDE.md
+
+## Git Operations
+
+本项目使用 git-mcp 进行 Git 操作。可用工具前缀：
+- `github_*` — GitHub 操作
+- `gitlab_*` — GitLab 操作
+- `gitee_*` — Gitee 操作
+- `gitcode_*` — GitCode 操作
+
+### 常用操作速查
+
+| 操作 | 工具 |
+|------|------|
+| 查看仓库 | `{platform}_get_repo` |
+| 列出 PR/MR | `{platform}_list_prs` |
+| 查看 PR 详情 | `{platform}_get_pr` |
+| 创建 PR | `{platform}_create_pr` |
+| 合并 PR | `{platform}_merge_pr` |
+| 查看 PR 变更 | `{platform}_get_pr_diffs` |
+| 查看 PR 评论 | `{platform}_list_pr_notes` |
+| 列 Issue | `{platform}_list_issues` |
+| 创建 Issue | `{platform}_create_issue` |
+| 读取文件 | `{platform}_get_file_contents` |
+| 写入文件 | `{platform}_create_or_update_file` |
+| 列分支 | `{platform}_list_branches` |
+| 列 Commit | `{platform}_list_commits` |
+| 搜索代码 | `{platform}_search_code` |
+| 查看 Pipeline | `{platform}_list_pipelines` |
+
+### 原则
+
+1. 修改操作前先用 `get_*` 确认当前状态
+2. merge/delete 前向用户确认
+3. 错误响应包含 `suggestion`，据此调整操作
+4. 创建 PR/Issue 时写出清晰的描述
